@@ -1,0 +1,3 @@
+// Ce fichier permet de spécifier quels fichiers ne pas récupérer dans le dépôt Git
+/node_modules
+/config/.env
