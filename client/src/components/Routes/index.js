@@ -1,17 +1,18 @@
 import React from "react";
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-import home from "../../pages/home";
+import { BrowserRouter as Router, Navigate, Route, Routes } from "react-router-dom";
+import Home from "../../pages/home";
 import Trending from "../../pages/Trending";
 import Profil from "../../pages/Profil";
 
 const index = () => {
     return (
         <Router>
-        <Switch>
-            <Route exact path="/" component={home} />
-            <Route path="/trending" component={Trending} />
-            <Route path="/profil" component={Profil} />
-        </Switch>
+            <Routes>
+                <Route exact path="/" element={<Home />} />
+                <Route path="/trending" element={<Trending />} />
+                <Route path="/profil" element={<Profil />} />
+                <Route path="*" element={<Navigate to="/" replace />} />
+            </Routes>
         </Router>
     );
 }
