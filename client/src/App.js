@@ -20,7 +20,8 @@ const App = () => {
           url: `${process.env.REACT_APP_API_URL}api/user/jwtid`,
           withCredentials: true
         });
-        setUserId(res.data);
+        //console.log("Raw response from /jwtid:", res.data);
+        setUserId(res.data.id);
       } catch (err) {
         if (err.response?.status !== 401) {
           console.log("No token, error fetching user ID:", err);
