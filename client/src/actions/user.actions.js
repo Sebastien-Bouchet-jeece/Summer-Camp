@@ -3,6 +3,8 @@ import axios from "axios";
 export const GET_USER = "GET_USER";
 export const UPLOAD_PICTURE = "UPLOAD_PICTURE"
 export const UPDATE_BIO = "UPDATE_BIO";
+export const FOLLOW_USER = "FOLLOW_USER"
+export const UNFOLLOW_USER = "UNFOLLOW_USER"
 
 export const getUser = (userId) => {
     // Dispatch c'est les données qui vont au reducer, 
@@ -46,5 +48,21 @@ export const updateBio = (userId, bio) => {
             dispatch({type: UPDATE_BIO, payload: bio})
         })
         .catch((err) => console.err)
+    }
+}
+
+// Le return axios contient toutes les mêmes choses importantes 
+// Que dans les requêtes du backend : method, url, et le data
+export const followUser = (followerId, idToFollow) => {
+    return (dispatch) => {
+        return axios({
+            method: "patch",
+            url: `${process.env.REACT_APP_API_URL}api/user/follow/` + followerId,
+            data: {idToFollow}
+        })
+        .then((res) => {
+            dispatch({ type: FOLLOW_USER, payload: {idToFollow}});
+        })
+        .catch((err) => console.log(err));
     }
 }
