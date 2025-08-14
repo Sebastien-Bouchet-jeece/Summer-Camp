@@ -1,19 +1,22 @@
 import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { isEmpty } from "../Utils";
+import { followUser, unfollowUser } from "../../actions/user.actions";
 
 const FollowHandler = ({ idToFollow }) => {
     // Pour avoir accés à notre store avec toutes les données utilisateur
     const userData = useSelector((state) => state.userReducer);
-
     const [isFollowed, setIsFollowed] = useState(false);
+    const dispatch = useDispatch();
 
     const handleFollow = () => {
-        
+        dispatch(followUser(userData._id, idToFollow));
+        setIsFollowed(true);
     }
 
     const handleUnfollow = () => {
-
+        dispatch(unfollowUser(userData._id, idToFollow));
+        setIsFollowed(false);
     }
 
     useEffect(() => {
