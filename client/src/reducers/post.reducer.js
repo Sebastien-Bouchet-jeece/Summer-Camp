@@ -8,6 +8,6 @@ export default function postReducer(state = initialState, action) {
             return action.payload;
     
         default:
-            break;
+            return state;
     }
 }
