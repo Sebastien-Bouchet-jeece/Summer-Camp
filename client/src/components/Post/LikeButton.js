@@ -61,6 +61,9 @@ const LikeButton = ({ post }) => {  // Ajout du prop "post"
                     onClick={unlike}
                 />
             )}
+
+            {/* Affichage du nombre de likes */}
+            <span>{post.likers.length}</span>
         </div>
     );
 }
