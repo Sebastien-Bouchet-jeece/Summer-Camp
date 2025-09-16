@@ -54,6 +54,7 @@ const Card = ({post}) => {
                                                 if (user._id === post.posterId) {
                                                     return user.username;
                                                 }
+                                                else return null;
                                             }).join('')
                                     }
                                 </h3>

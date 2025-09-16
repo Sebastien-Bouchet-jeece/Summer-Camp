@@ -84,7 +84,7 @@ const UpdateProfil = () => {
                                                 <FollowHandler idToFollow={user._id} type={'suggestion'}/>
                                             </div>
                                         </li>
-                                    )
+                                    );
                                 }
                             }
                             return null;
