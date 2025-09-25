@@ -1,4 +1,4 @@
-import { DELETE_POST, GET_POSTS, LIKE_POST, UNLIKE_POST, UPDATE_POST } from "../actions/post.actions";
+import { ADD_COMMENT, DELETE_COMMENT, DELETE_POST, EDIT_COMMENT, GET_POSTS, LIKE_POST, UNLIKE_POST, UPDATE_POST } from "../actions/post.actions";
 
 const initialState = {};
 
@@ -43,6 +43,60 @@ export default function postReducer(state = initialState, action) {
         case DELETE_POST:
             return state.filter((post) => post._id !== action.payload.postId);
 
+        
+        /*case ADD_COMMENT:
+            return state.map((post) => {
+                if (post._id === action.payload.postId) {
+                    const newComment = {
+                        commenterId: action.payload.comment.commenterId,
+                        commenterUsername: action.payload.comment.commenterUsername,
+                        text: action.payload.comment.text,
+                        timestamp: Date.now() // Force a new timestamp here
+                    };
+                    return {
+                        ...post,
+                        comments: [...post.comments, newComment]
+                    };
+                }
+                return post;
+            }); */
+
+        case EDIT_COMMENT:
+            return state.map((post) => {
+                // Une recherche pour trouver le post avec l'ID correspondant
+                if (post._id === action.payload.postId) {
+                    return {
+                        ...post,
+                        comments: post.comments.map((comment) => {
+
+                // Une recherche pour trouver le commentaire avec l'ID correspondant
+                            if (comment._id === action.payload.commentId) {
+                                return {
+                                    ...comment,
+                                    text: action.payload.text
+                                }
+                            }
+                            return comment;
+                        })
+                    }
+                }
+                return post;
+            })
+
+        case DELETE_COMMENT:
+            return state.map((post) => {
+                // Une recherche pour trouver le post avec l'ID correspondant
+                if (post._id === action.payload.postId) {
+                    return {
+                        ...post,
+                        comments: post.comments.filter(
+                            (comment) =>  comment._id !== action.payload.commentId
+                        )
+                    }
+                }
+                return post;
+            })
+        
         default:
             return state;
     }

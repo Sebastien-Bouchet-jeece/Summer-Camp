@@ -194,7 +194,8 @@ module.exports.commentPost = async (req, res) => {
             { new: true }
         );
 
-        return res.send(post);
+        return res.status(201).json(comment);
+        //return res.send(post);
     } catch (err) {
         console.log('Error commenting post : ' + err);
         return res.status(400).send({ message: err });
