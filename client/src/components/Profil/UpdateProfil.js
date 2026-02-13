@@ -12,7 +12,7 @@ const UpdateProfil = () => {
 
     const userData = useSelector((state) => state.userReducer);
     const usersData = useSelector((state) => state.usersReducer);
-
+    const error = useSelector((state) => state.errorReducer.userError); // Get post errors from Redux store
 
     const dispatch = useDispatch();
 
@@ -35,8 +35,9 @@ const UpdateProfil = () => {
                 <h3>Photo de profil</h3>
                 <img src={userData.picture} alt="user-profile-pic"/>
                 <Uploadimg />
-                {/*<p>{errors.maxSize}</p>
-                <p>{errors.format}</p>*/}
+                {error?.error && <p>{error.error}</p>}
+                {error?.maxSize && <p>{error.maxSize}</p>}
+                {error?.format && <p>{error.format}</p>}
             </div>
 
             <div className="right-part">

@@ -3,6 +3,7 @@ import axios from "axios";
 // Posts
 
 export const GET_POSTS = "GET_POSTS";
+export const ADD_POST = "ADD_POST";
 export const LIKE_POST = "LIKE_POST";
 export const UNLIKE_POST = "UNLIKE_POST";
 export const UPDATE_POST = "UPDATE_POST";
@@ -13,6 +14,10 @@ export const DELETE_POST = "DELETE_POST";
 export const ADD_COMMENT = "ADD_COMMENT";
 export const EDIT_COMMENT = "EDIT_COMMENT";
 export const DELETE_COMMENT = "DELETE_COMMENT";
+
+// Errors
+
+export const GET_POST_ERRORS = "GET_POST_ERRORS";
 
 // Get all posts
 
@@ -25,6 +30,26 @@ export const getPosts = (count) => {
                 dispatch({ type: GET_POSTS, payload: array })
             })
             .catch((err) => console.log(err));
+    }
+}
+
+export const addPost = (data) => {
+    return (dispatch) => {
+        return axios
+            .post(`${process.env.REACT_APP_API_URL}api/post/`, data)
+            .then((res) => {
+                if (res.data.errors) {
+                    dispatch({ type: GET_POST_ERRORS, payload: res.data.errors });
+                } else {
+                    dispatch({ type: GET_POST_ERRORS, payload: "" });
+                    dispatch({ type: ADD_POST, payload: res.data });
+                }
+            })
+            .catch((err) => {
+                // Dispatch the error instead of just logging it
+                const errorPayload = err.response?.data?.errors || err.response?.data || { message: "Network error" };
+                dispatch({ type: GET_POST_ERRORS, payload: errorPayload });
+            });
     }
 }
 
